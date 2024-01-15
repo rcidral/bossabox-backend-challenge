@@ -59,6 +59,14 @@ describe('Create Tool', () => {
     )
   })
 
+  it('should not be able to create a tool with invalid tags length', async () => {
+    tool.tags = ['a']
+
+    await expect(createTool.execute(tool)).rejects.toThrow(
+      'tags.0: String must contain at least 2 character(s)',
+    )
+  })
+
   afterEach(() => {
     toolRepository.clean()
     tool = {

@@ -13,6 +13,14 @@ export default class ToolRepositoryInMemory implements IToolRepository {
     return tool
   }
 
+  async getTools(tag?: string): Promise<Tool[]> {
+    if (tag) {
+      return this.tools.filter((tool) => tool.tags.includes(tag))
+    }
+
+    return this.tools
+  }
+
   async clean(): Promise<void> {
     this.tools = []
   }
