@@ -7,7 +7,7 @@ export default class ToolRepositoryInMemory implements IToolRepository {
   async save(tool: Tool): Promise<Tool> {
     const lasId = this.tools.length + 1
 
-    tool.id = lasId.toString()
+    tool.id = lasId
     this.tools.push(tool)
 
     return tool
@@ -19,6 +19,16 @@ export default class ToolRepositoryInMemory implements IToolRepository {
     }
 
     return this.tools
+  }
+
+  async delete(id: number): Promise<void> {
+    const toolIndex = this.tools.findIndex((tool) => tool.id === id)
+
+    this.tools.splice(toolIndex, 1)
+  }
+
+  async getToolById(id: number): Promise<Tool | undefined> {
+    return this.tools.find((tool) => tool.id === id)
   }
 
   async clean(): Promise<void> {

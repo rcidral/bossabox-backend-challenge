@@ -4,7 +4,7 @@ export default class Tool {
     public link: string,
     public description: string,
     public tags: string[],
-    public id?: string,
+    public id?: number,
   ) {}
 
   static create(
