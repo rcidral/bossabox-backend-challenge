@@ -39,6 +39,10 @@ describe('Delete Tool', async () => {
     )
   })
 
+  it('should not be able to delete a tool that does not exist', async () => {
+    await expect(deleteTool.execute(999)).rejects.toThrow('Tool not found')
+  })
+
   afterEach(() => {
     toolRepository.clean()
     tool = {

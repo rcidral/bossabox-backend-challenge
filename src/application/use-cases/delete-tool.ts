@@ -12,6 +12,12 @@ export default class DeleteTool {
   async execute(id: number): Promise<void> {
     this.validator.validate({ id })
 
+    const tool = await this.toolRepository.getToolById(id)
+
+    if (!tool) {
+      throw new Error('Tool not found')
+    }
+
     return this.toolRepository.delete(id)
   }
 }

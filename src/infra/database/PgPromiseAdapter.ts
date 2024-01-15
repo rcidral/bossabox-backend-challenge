@@ -26,11 +26,10 @@ export default class PgPromiseAdapter implements IDatabase {
   async query(sql: string, params?: any): Promise<any> {
     if (this.connection != null) {
       if (params === undefined) {
-        const [rows] = await this.connection.query(sql)
+        const rows = await this.connection.query(sql)
         return rows
       } else {
-        const [rows] = await this.connection.query(sql, params)
-
+        const rows = await this.connection.query(sql, params)
         return rows
       }
     }
