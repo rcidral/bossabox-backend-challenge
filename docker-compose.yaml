@@ -10,3 +10,15 @@ services:
       - POSTGRESQL_DATABASE=bossabox
     volumes:
       - ./config/db.sql:/docker-entrypoint-initdb.d/db.sql
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - db
