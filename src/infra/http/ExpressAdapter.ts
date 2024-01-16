@@ -4,6 +4,8 @@ import Express, {
   type NextFunction,
 } from 'express'
 import { type IHttpServer } from './iHttpServer'
+import swaggerUi from 'swagger-ui-express'
+import swaggerDocs from '../../../swagger.json'
 
 export default class ExpressAdapter implements IHttpServer {
   app: any
@@ -11,6 +13,7 @@ export default class ExpressAdapter implements IHttpServer {
   constructor() {
     this.app = Express()
     this.app.use(Express.json())
+    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
   }
 
   on(

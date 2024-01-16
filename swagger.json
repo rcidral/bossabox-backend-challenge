@@ -1,0 +1,279 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "BossaBox Backend Challenge",
+        "description": "This is a simple API to manage tools.",
+        "contact": {
+            "email": "ricidralmfo@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "description": "Local server"
+        }
+    ],
+    "paths": {
+        "/tools": {
+            "post": {
+                "summary": "Create a new tool",
+                "description": "This route is used to create a new tool.",
+                "tags": [
+                    "Tools"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Tool"
+                            },
+                            "examples": {
+                                "tool": {
+                                    "value": {
+                                        "title": "Notion",
+                                        "link": "https://notion.so",
+                                        "description": "All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized. ",
+                                        "tags": [
+                                            "organization",
+                                            "planning",
+                                            "collaboration",
+                                            "writing",
+                                            "calendar"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Tool"
+                                },
+                                "examples": {
+                                    "tool": {
+                                        "value": {
+                                            "id": 1,
+                                            "title": "Notion",
+                                            "link": "https://notion.so",
+                                            "description": "All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized. ",
+                                            "tags": [
+                                                "organization",
+                                                "planning",
+                                                "collaboration",
+                                                "writing",
+                                                "calendar"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                },
+                                "examples": {
+                                    "error": {
+                                        "value": {
+                                            "message": "field: error message"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tools?tag=": {
+            "get": {
+                "summary": "List all tools",
+                "description": "This route is used to list all tools or filter by tag.",
+                "tags": [
+                    "Tools"
+                ],
+                "parameters": [
+                    {
+                        "name": "tag",
+                        "in": "query",
+                        "description": "Tag to filter tools",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Tool"
+                                    }
+                                },
+                                "examples": {
+                                    "tools": {
+                                        "value": [
+                                            {
+                                                "id": 1,
+                                                "title": "Notion",
+                                                "link": "https://notion.so",
+                                                "description": "All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized. ",
+                                                "tags": [
+                                                    "organization",
+                                                    "planning",
+                                                    "collaboration",
+                                                    "writing",
+                                                    "calendar"
+                                                ]
+                                            },
+                                            {
+                                                "id": 2,
+                                                "title": "Notion",
+                                                "link": "https://notion.so",
+                                                "description": "All in one tool to organize teams and ideas. Write, plan, collaborate, and get organized. ",
+                                                "tags": [
+                                                    "organization",
+                                                    "planning",
+                                                    "collaboration",
+                                                    "writing",
+                                                    "calendar"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tools/{id}": {
+            "delete": {
+                "summary": "Delete a tool",
+                "description": "This route is used to delete a tool.",
+                "tags": [
+                    "Tools"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Tool id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Array"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                },
+                                "examples": {
+                                    "error": {
+                                        "value": {
+                                            "message": "Tool not found"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                },
+                                "examples": {
+                                    "error": {
+                                        "value": {
+                                            "message": "field: error message"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Tool": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "title": {
+                        "type": "string",
+                        "minLength": 3
+                    },
+                    "link": {
+                        "type": "string",
+                        "format": "url",
+                        "minLength": 3
+                    },
+                    "description": {
+                        "type": "string",
+                        "minLength": 3
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "Array": {
+                "type": "array",
+                "items": {
+                    "type": "array"
+                }
+            },
+            "Error": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
